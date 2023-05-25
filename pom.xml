@@ -58,6 +58,12 @@
 			<artifactId>spring-boot-actuator</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>io.minio</groupId>
+			<artifactId>minio</artifactId>
+			<version>8.4.3</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

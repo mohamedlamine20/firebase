@@ -8,8 +8,12 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
+import io.minio.*;
+import io.minio.errors.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -83,5 +87,26 @@ public class FileService {
 //    private String getExtension(String fileName) {
 //        return fileName.substring(fileName.lastIndexOf("."));
 //    }
+
+
+    public  String uploadMini() throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+
+        MinioClient minioClient = MinioClient
+                .builder()
+                .endpoint("http://localhost:9000")
+                .credentials("41ViwHVyGBKKFT4F","ERQESaZOuzIhONOHENoZoAAAKgpW5Wmv")
+                .build();
+
+        minioClient.bucketExists(BucketExistsArgs.builder().bucket("test").build());
+        ObjectWriteResponse  response= minioClient.uploadObject(
+                UploadObjectArgs.builder()
+                        .bucket("test")
+                        .object("image.png")
+                        .filename("/home/mohamed/Desktop/firebase/image.png")
+                        .contentType("image/png")
+                .build()
+        );
+        return response.object();
+    }
 }
 
